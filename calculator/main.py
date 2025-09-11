@@ -1,26 +1,20 @@
-# main.py
-
+# python
 import sys
 from pkg.calculator import Calculator
-from pkg.render import render
-
 
 def main():
-    calculator = Calculator()
-    if len(sys.argv) <= 1:
-        print("Calculator App")
-        print('Usage: python main.py "<expression>"')
-        print('Example: python main.py "3 + 5"')
-        return
+    if len(sys.argv) < 2:
+        print('usage: uv run calculator/main.py "3 + 7 * 2"')
+        raise SystemExit(1)
 
-    expression = " ".join(sys.argv[1:])
-    try:
-        result = calculator.evaluate(expression)
-        to_print = render(expression, result)
-        print(to_print)
-    except Exception as e:
-        print(f"Error: {e}")
-
+    expr = sys.argv[1]
+    calc = Calculator()
+    result = calc.evaluate(expr)
+    # If you want an int-like display for whole numbers:
+    if result.is_integer():
+        print(int(result))
+    else:
+        print(result)
 
 if __name__ == "__main__":
     main()
